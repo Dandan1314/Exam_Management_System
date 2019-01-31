@@ -11,7 +11,7 @@ export const editAdmin = (adminInfo) => {
   return axios.request({
     url: `editAdmin`,
     method: 'patch',
-    data: adminInfo    
+    data: adminInfo
   })
 }
 
@@ -19,7 +19,7 @@ export const changePassWord = (changePassObj) => {
   return axios.request({
     url: `changeAdminPassword`,
     method: 'patch',
-    data: changePassObj    
+    data: changePassObj
   })
 }
 
@@ -36,9 +36,7 @@ export const addAdmin = (addAdminObj) => {
     method: 'put',
     data: addAdminObj
   })
-}  
-
-
+}
 
 export const getTableData = () => {
   return axios.request({
