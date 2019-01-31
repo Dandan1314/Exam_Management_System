@@ -7,6 +7,39 @@ export const getAdminList = (pageNum, limit) => {
   })
 }
 
+export const editAdmin = (adminInfo) => {
+  return axios.request({
+    url: `editAdmin`,
+    method: 'patch',
+    data: adminInfo    
+  })
+}
+
+export const changePassWord = (changePassObj) => {
+  return axios.request({
+    url: `changeAdminPassword`,
+    method: 'patch',
+    data: changePassObj    
+  })
+}
+
+export const deleteAdmin = (aid) => {
+  return axios.request({
+    url: `delAdmin/${aid}`,
+    method: 'delete'
+  })
+}
+
+export const addAdmin = (addAdminObj) => {
+  return axios.request({
+    url: `addAdmin`,
+    method: 'put',
+    data: addAdminObj
+  })
+}  
+
+
+
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',

@@ -71,7 +71,7 @@ export default [
     children: [
       {
         path: 'manage_admin',
-        name: 'manage_admin',
+        name: 'manage_admin_child',
         meta: {
           icon: 'md-settings',
           title: '{{ manageAdmin }}'

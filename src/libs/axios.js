@@ -22,7 +22,8 @@ class HttpRequest {
       baseURL: this.baseUrl,
       headers: {
         //
-      }
+      },
+      withCredentials:true
     }
     return config
   }
