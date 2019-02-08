@@ -1,40 +1,70 @@
 import axios from '@/libs/api.request'
 
+// 获取管理员列表
 export const getAdminList = (pageNum, limit) => {
   return axios.request({
     url: `getAdminList/${limit}/${pageNum}`,
-    method: 'get'
+    method: `get`
   })
 }
 
+// 编辑管理员资料
 export const editAdmin = (adminInfo) => {
   return axios.request({
     url: `editAdmin`,
-    method: 'patch',
+    method: `patch`,
     data: adminInfo
   })
 }
 
+// 修改管理员密码
 export const changePassWord = (changePassObj) => {
   return axios.request({
     url: `changeAdminPassword`,
-    method: 'patch',
+    method: `patch`,
     data: changePassObj
   })
 }
 
+// 删除管理员
 export const deleteAdmin = (aid) => {
   return axios.request({
     url: `delAdmin/${aid}`,
-    method: 'delete'
+    method: `delete`
   })
 }
 
+// 新增管理员
 export const addAdmin = (addAdminObj) => {
   return axios.request({
     url: `addAdmin`,
-    method: 'put',
+    method: `put`,
     data: addAdminObj
+  })
+}
+
+// 获取考试分类
+export const getExamCategoryList = () => {
+  return axios.request({
+    url: `/getExamCategoryList`,
+    method: `get`
+  })
+}
+
+// 新增考试分类
+export const addExamCategory = (addExamCategoryInfo) => {
+  return axios.request({
+    url: `/addExamCategory`,
+    method: `put`,
+    data: addExamCategoryInfo
+  })
+}
+
+// 删除考试分类
+export const deleteCategory = (categoryId) => {
+  return axios.request({
+    url: `/delExamCategory/${categoryId}`,
+    method: `delete`
   })
 }
 

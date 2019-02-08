@@ -50,16 +50,6 @@ export default [
       }
     ]
   },
-  // {
-  //   path: '/manageAdmin',
-  //   name: 'manageAdmin',
-  //   meta: {
-  //     access: [2],
-  //     title: '修改管理员',
-  //     icon: 'md-settings',
-  //     component: () => import('@/view/i18n/i18n-page.vue')
-  //   }
-  // },
   {
     path: '/manage_admin',
     name: 'manage_admin',
@@ -74,12 +64,33 @@ export default [
         name: 'manage_admin_child',
         meta: {
           icon: 'md-settings',
-          title: '{{ manageAdmin }}'
+          title: '管理员操作'
         },
         component: () => import('@/view/manage-admin/manage-admin.vue')
       }
     ]
   },
+  {
+    path: '/manage_exam_category',
+    name: 'manage_exam_category',
+    meta: {
+      access: [1, 2],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'manage_exam_category',
+        name: '考试分类管理',
+        meta: {
+          icon: 'md-paper',
+          title: '考试分类管理'
+        },
+        component: () => import('@/view/manage_exam_category/manage_exam_category.vue')
+      }
+    ]
+  },
+
   {
     path: '',
     name: 'doc',
