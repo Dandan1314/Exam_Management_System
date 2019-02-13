@@ -29,7 +29,7 @@
 
       <!-- 新增分类模态框 -->
       <Modal v-model="addCategoryModel" title="新增分类" :loading="loading" @on-ok="addCategoryOk()">
-        <Form :model="addCategoryInfo" label-position="right" :label-width="100">
+        <Form :model="addCategoryInfo" label-position="right" :label-width="100" @submit.native.prevent="false">
           <FormItem label="分类名">
             <Input v-model="addCategoryInfo.name"></Input>
           </FormItem>

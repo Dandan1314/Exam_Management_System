@@ -81,7 +81,7 @@ export default [
     children: [
       {
         path: 'manage_exam_category',
-        name: '考试分类管理',
+        name: 'manage_exam_category_child',
         meta: {
           icon: 'md-paper',
           title: '考试分类管理'
@@ -90,7 +90,26 @@ export default [
       }
     ]
   },
-
+  {
+    path: '/exam_info_manage',
+    name: 'exam_info_manage',
+    meta: {
+      access: [1, 2],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'exam_info_manage_child',
+        name: '考试信息管理',
+        meta: {
+          icon: 'md-paper',
+          title: '考试信息管理'
+        },
+        component: () => import('@/view/exam_info_manage/exam_info_manage.vue')
+      }
+    ]
+  },
   {
     path: '',
     name: 'doc',

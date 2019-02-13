@@ -3,11 +3,7 @@
     <Card shadow>
       <Button type="primary" @click="addAdmin">新增管理员</Button>
       <!--  管理员列表，表格  -->
-      <Table stripe :columns="adminsListTitle" :data="adminList" :style="{margin:'20px 0'}">
-        <template slot-scope="{ row }" slot="name">
-          <strong>{{ row.name }}</strong>
-        </template>
-      </Table>
+      <Table stripe :columns="adminsListTitle" :data="adminList" :style="{margin:'20px 0'}"></Table>
       <!-- 分页组件 -->
       <Page
         :total="totalNum"
@@ -113,7 +109,7 @@ export default {
         },
         {
           title: '操作',
-          slot: 'action',
+          key: 'action',
           render: (h, params) => {
             let renderArr = [
               h(
@@ -213,6 +209,7 @@ export default {
       const vm = this
       vm.totalNum = info.adminCountTotal
       vm.adminList = info.adminList
+      console.log(vm.adminList)
     },
     addAdmin () {
       const vm = this
