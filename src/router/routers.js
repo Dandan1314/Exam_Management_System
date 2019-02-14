@@ -28,6 +28,15 @@ export default [
     component: () => import('@/view/login/login.vue')
   },
   {
+    path: '/adminLogin',
+    name: 'adminLogin',
+    meta: {
+      title: 'adminLogin - 登录',
+      hideInMenu: true
+    },
+    component: () => import('@/view/adminLogin/adminLogin.vue')
+  },
+  {
     path: '/',
     name: '_home',
     redirect: '/home',
