@@ -120,6 +120,66 @@ export default [
     ]
   },
   {
+    path: '/sign_exam',
+    name: 'sign_exam',
+    meta: {
+      access: ['common_user'],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'sign_exam_child',
+        name: '预约考试',
+        meta: {
+          icon: 'md-paper',
+          title: '预约考试'
+        },
+        component: () => import('@/view/sign_exam/sign_exam.vue')
+      }
+    ]
+  },
+  {
+    path: '/my_sign_exam',
+    name: 'my_sign_exam',
+    meta: {
+      access: ['common_user'],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'my_sign_exam_child',
+        name: '我的预约',
+        meta: {
+          icon: 'md-paper',
+          title: '我的预约'
+        },
+        component: () => import('@/view/my_sign_exam/my_sign_exam.vue')
+      }
+    ]
+  },
+  {
+    path: '/personal_info',
+    name: 'personal_info',
+    meta: {
+      access: ['common_user'],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'personal_info_child',
+        name: '我的资料',
+        meta: {
+          icon: 'md-paper',
+          title: '我的资料'
+        },
+        component: () => import('@/view/exam_info_manage/exam_info_manage.vue')
+      }
+    ]
+  },
+  {
     path: '',
     name: 'doc',
     meta: {

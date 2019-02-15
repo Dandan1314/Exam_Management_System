@@ -5,7 +5,7 @@
 <template>
   <div class="login">
     <div class="login-con">
-      <Card icon="log-in" title="欢迎登录" :bordered="false">
+      <Card icon="log-in" title="欢迎用户登录" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit"></login-form>
         </div>
@@ -23,12 +23,13 @@ export default {
   },
   methods: {
     ...mapActions([
-      'handleLogin',
+      'handleUserLogin',
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
+      this.handleUserLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
+          console.log('res => ', res)
           this.$router.push({
             name: this.$config.homeName
           })

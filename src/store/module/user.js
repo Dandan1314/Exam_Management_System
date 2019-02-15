@@ -1,5 +1,6 @@
 import {
-  login,
+  adminLogin,
+  userLogin,
   logout,
   getMessage,
   getContentByMsgId,
@@ -74,11 +75,27 @@ export default {
     messageTrashCount: state => state.messageTrashList.length
   },
   actions: {
-    // 登录
-    handleLogin ({ commit }, { userName, password }) {
+    // 管理员登录
+    handleAdminLogin ({ commit }, { userName, password }) {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
-        login({
+        adminLogin({
+          userName,
+          password
+        }).then(res => {
+          const data = res.data
+          commit('setToken', data.data.token)
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    // 用户登录
+    handleUserLogin ({ commit }, { userName, password }) {
+      userName = userName.trim()
+      return new Promise((resolve, reject) => {
+        userLogin({
           userName,
           password
         }).then(res => {

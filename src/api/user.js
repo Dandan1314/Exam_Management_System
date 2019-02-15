@@ -1,13 +1,25 @@
 import axios from '@/libs/api.request'
 
-export const logout = (token) => {
+export const logout = () => {
   return axios.request({
     url: 'logout',
     method: 'post'
   })
 }
 
-export const login = ({ userName, password }) => {
+export const userLogin = ({ userName, password }) => {
+  const data = {
+    login_name: userName,
+    password: password
+  }
+  return axios.request({
+    url: 'userLogin',
+    data,
+    method: 'post'
+  })
+}
+
+export const adminLogin = ({ userName, password }) => {
   const data = {
     login_name: userName,
     password: password

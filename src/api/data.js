@@ -93,6 +93,33 @@ export const deleteExamInfo = eid => {
   })
 }
 
+// 添加预约信息
+export const addSignInfo = eid => {
+  return axios.request({
+    url: `addSignInfo`,
+    method: `put`,
+    data: {
+      eid
+    }
+  })
+}
+
+// 获取预约的考试列表
+export const getSignInfoList = (pageNum, limit) => {
+  return axios.request({
+    url: `getSignInfoList/${limit}/${pageNum}`,
+    method: 'get'
+  })
+}
+
+// 取消预约的考试
+export const cancleSignInfo = (uid, eid) => {
+  return axios.request({
+    url: `cancleSignInfo/${eid}/${uid}`,
+    method: 'delete'
+  })
+}
+
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',

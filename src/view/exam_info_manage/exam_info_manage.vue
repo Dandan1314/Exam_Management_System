@@ -116,14 +116,18 @@ export default {
           width: '80px'
         },
         {
+          title: '标题',
+          key: 'title'
+        },
+        {
           title: '作者',
           key: 'author',
-          width: '200px'
+          width: '130px'
         },
         {
           title: '考试分类',
           key: 'category',
-          width: '200px'
+          width: '150px'
         },
         {
           title: '考试时间',
@@ -244,7 +248,6 @@ export default {
       vm.examSubmitLoading = true
       addExamInfo(vm.examInfo)
         .then(res => {
-          console.log('res => ', res)
           vm.$Message.success('添加成功！')
           vm.examSubmitLoading = false
           vm.getExamInfoList(1)
