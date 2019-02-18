@@ -110,12 +110,32 @@ export default [
     children: [
       {
         path: 'exam_info_manage_child',
-        name: '考试信息管理',
+        name: 'exam_info_manage_child',
         meta: {
           icon: 'md-paper',
           title: '考试信息管理'
         },
         component: () => import('@/view/exam_info_manage/exam_info_manage.vue')
+      }
+    ]
+  },
+  {
+    path: '/user_info_manage',
+    name: 'user_info_manage',
+    meta: {
+      access: [1, 2],
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: 'user_info_manage_child',
+        name: 'user_info_manage_child',
+        meta: {
+          icon: 'md-paper',
+          title: '用户信息管理'
+        },
+        component: () => import('@/view/user_info_manage/user_info_manage.vue')
       }
     ]
   },
@@ -130,7 +150,7 @@ export default [
     children: [
       {
         path: 'sign_exam_child',
-        name: '预约考试',
+        name: 'sign_exam_child',
         meta: {
           icon: 'md-paper',
           title: '预约考试'
@@ -150,7 +170,7 @@ export default [
     children: [
       {
         path: 'my_sign_exam_child',
-        name: '我的预约',
+        name: 'my_sign_exam_child',
         meta: {
           icon: 'md-paper',
           title: '我的预约'
@@ -170,7 +190,7 @@ export default [
     children: [
       {
         path: 'personal_info_child',
-        name: '我的资料',
+        name: 'personal_info_child',
         meta: {
           icon: 'md-paper',
           title: '我的资料'

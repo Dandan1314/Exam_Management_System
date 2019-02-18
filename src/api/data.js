@@ -146,6 +146,31 @@ export const submitRealNameAuth = (userInfo) => {
   })
 }
 
+// 获取用户列表
+export const getUserList = (pageNum, limit) => {
+  return axios.request({
+    url: `getUserList/${limit}/${pageNum}`,
+    method: `get`
+  })
+}
+
+// 修改用户的密码
+export const editUserPassword = passwordInfo => {
+  return axios.request({
+    url: `editUserPassword`,
+    method: `patch`,
+    data: passwordInfo
+  })
+}
+
+// 删除用户
+export const deleteUser = uid => {
+  return axios.request({
+    url: `delUser/${uid}`,
+    method: `delete`
+  })
+}
+
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',

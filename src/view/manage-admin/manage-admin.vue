@@ -47,7 +47,6 @@
         title="修改密码"
         :loading="loading"
         @on-ok="changePassOk"
-        header="hello"
       >
         <Form :model="passwordInfo" label-position="right" :label-width="100">
           <FormItem label="新密码">
@@ -209,7 +208,6 @@ export default {
       const vm = this
       vm.totalNum = info.adminCountTotal
       vm.adminList = info.adminList
-      console.log(vm.adminList)
     },
     addAdmin () {
       const vm = this
