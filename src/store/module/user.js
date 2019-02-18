@@ -19,6 +19,7 @@ export default {
     avatorImgPath: '',
     token: getToken(),
     access: '',
+    realNameAuth: null,
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
@@ -42,6 +43,9 @@ export default {
     setToken (state, token) {
       state.token = token
       setToken(token)
+    },
+    setRealNameAuth (state, realNameAuth) {
+      state.realNameAuth = localStorage.getItem('setRealNameAuth') || realNameAuth
     },
     setHasGetInfo (state, status) {
       state.hasGetInfo = status
@@ -70,6 +74,7 @@ export default {
   },
   getters: {
     CurrentUserId: state => state.userId,
+    CurrentUserNameAuthStatus: state => state.realNameAuth,
     messageUnreadCount: state => state.messageUnreadList.length,
     messageReadedCount: state => state.messageReadedList.length,
     messageTrashCount: state => state.messageTrashList.length
@@ -115,6 +120,8 @@ export default {
           commit('setUserName', '')
           commit('setUserId', '')
           commit('setAccess', [])
+          commit('setRealNameAuth', null)
+          localStorage.removeItem('setRealNameAuth')
           resolve()
         }).catch(err => {
           reject(err)
@@ -133,10 +140,20 @@ export default {
           commit('setUserName', data.name)
           commit('setUserId', data.id)
           commit('setAccess', [data.role])
+          commit('setRealNameAuth', data.realNameAuth)
+          localStorage.setItem('setRealNameAuth', data.realNameAuth)
           resolve(data)
         } catch (error) {
           reject(error)
         }
+      })
+    },
+    // 修改用户实名认证状态
+    setUserRealNameAuth ({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit('setRealNameAuth', 1)
+        localStorage.setItem('setRealNameAuth', 1)
+        resolve()
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表

@@ -1,5 +1,6 @@
 import axios from '@/libs/api.request'
 
+// 注销
 export const logout = () => {
   return axios.request({
     url: 'logout',
@@ -7,6 +8,7 @@ export const logout = () => {
   })
 }
 
+// 普通用户登录
 export const userLogin = ({ userName, password }) => {
   const data = {
     login_name: userName,
@@ -19,6 +21,7 @@ export const userLogin = ({ userName, password }) => {
   })
 }
 
+// 管理员登录
 export const adminLogin = ({ userName, password }) => {
   const data = {
     login_name: userName,
@@ -28,6 +31,15 @@ export const adminLogin = ({ userName, password }) => {
     url: 'adminLogin',
     data,
     method: 'post'
+  })
+}
+
+// 注册新用户
+export const userReg = (regObj) => {
+  return axios.request({
+    url: 'regUser',
+    method: 'put',
+    data: regObj
   })
 }
 

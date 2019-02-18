@@ -1,13 +1,22 @@
 <style lang="less">
-  @import './login.less';
+@import "./login.less";
 </style>
 
 <template>
   <div class="login">
     <div class="login-con">
-      <Card icon="log-in" title="欢迎用户登录" :bordered="false">
+      <Card icon="log-in" :bordered="false">
+        <p slot="title">欢迎使用考试预约系统</p>
+        <Button
+          type="text"
+          slot="extra"
+          size="small"
+          @click="changeLoginRegStatus"
+          :style="{boxShadow: 'none'}"
+        >{{changeButton}}</Button>
         <div class="form-con">
-          <login-form @on-success-valid="handleSubmit"></login-form>
+          <login-form @on-success-valid="handleSubmit" v-show="LoginReg"></login-form>
+          <reg-form @on-success-valid="handleReg" v-show="!LoginReg"></reg-form>
         </div>
       </Card>
     </div>
@@ -16,30 +25,51 @@
 
 <script>
 import LoginForm from '_c/login-form'
+import RegForm from '_c/reg-form'
 import { mapActions } from 'vuex'
+import { userReg } from '@/api/user'
 export default {
   components: {
-    LoginForm
+    LoginForm,
+    RegForm
+  },
+  data () {
+    return {
+      LoginReg: 1,
+      changeButton: '注册新用户'
+    }
   },
   methods: {
     ...mapActions([
       'handleUserLogin',
       'getUserInfo'
     ]),
+    changeLoginRegStatus () {
+      this.LoginReg = !this.LoginReg
+      this.changeButton = this.LoginReg ? '注册新用户' : '立即登录'
+    },
     handleSubmit ({ userName, password }) {
       this.handleUserLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
-          console.log('res => ', res)
           this.$router.push({
             name: this.$config.homeName
           })
         })
       })
+    },
+    handleReg ({ userName, password1, password2 }) {
+      userReg({ login_name: userName, password: password1 })
+        .then(res => {
+          this.$Message.success('注册成功！')
+          this.changeLoginRegStatus()
+        })
+        .catch(err => {
+          this.$Message.error(err.response.data.message)
+        })
     }
   }
 }
 </script>
 
 <style>
-
 </style>

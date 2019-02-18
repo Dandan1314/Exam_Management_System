@@ -17,6 +17,7 @@
 <script>
 import { getSignInfoList, cancleSignInfo } from '@/api/data'
 import * as moment from 'moment'
+// import * as store from '../../store/module/user'
 export default {
   name: 'my_sign_exam_child',
   data () {
@@ -167,6 +168,14 @@ export default {
     const vm = this
     vm.getSignInfoList(1)
   }
+  // beforeRouteEnter (to, from, next) {
+  //   const realNameAuth = store.default.state.realNameAuth - 0
+  //   if (!realNameAuth) {
+  //     next({ path: '/personal_info/personal_info_child' })
+  //   } else {
+  //     next()
+  //   }
+  // }
 }
 </script>
 

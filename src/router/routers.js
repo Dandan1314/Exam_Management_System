@@ -175,7 +175,7 @@ export default [
           icon: 'md-paper',
           title: '我的资料'
         },
-        component: () => import('@/view/exam_info_manage/exam_info_manage.vue')
+        component: () => import('@/view/personal_info/personal_info.vue')
       }
     ]
   },

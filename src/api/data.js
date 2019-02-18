@@ -120,6 +120,32 @@ export const cancleSignInfo = (uid, eid) => {
   })
 }
 
+// 获取用户信息
+export const getUserInfo = () => {
+  return axios.request({
+    url: `getUserInfo`,
+    method: 'get'
+  })
+}
+
+// 保存用户信息
+export const submitUserInfo = (userInfo) => {
+  return axios.request({
+    url: `editUserInfo`,
+    method: `patch`,
+    data: userInfo
+  })
+}
+
+// 进行实名认证
+export const submitRealNameAuth = (userInfo) => {
+  return axios.request({
+    url: `realNameAuth`,
+    method: `post`,
+    data: userInfo
+  })
+}
+
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',
