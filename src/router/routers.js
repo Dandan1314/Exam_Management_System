@@ -42,17 +42,17 @@ export default [
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: true,
-      notCache: true
+      // hideInMenu: true,
+      // notCache: true
     },
     children: [
       {
         path: '/home',
         name: 'home',
         meta: {
-          hideInMenu: true,
+          // hideInMenu: true,
           title: '首页',
-          notCache: true,
+          // notCache: true,
           icon: 'md-home'
         },
         component: () => import('@/view/single-page/home')
