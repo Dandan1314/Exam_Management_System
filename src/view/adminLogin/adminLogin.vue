@@ -1,5 +1,5 @@
 <style lang="less">
-  @import './adminLogin.less';
+@import "./adminLogin.less";
 </style>
 
 <template>
@@ -22,23 +22,25 @@ export default {
     LoginForm
   },
   methods: {
-    ...mapActions([
-      'handleAdminLogin',
-      'getUserInfo'
-    ]),
+    ...mapActions(['handleAdminLogin', 'getUserInfo']),
     handleSubmit ({ userName, password }) {
-      this.handleAdminLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
-          this.$router.push({
-            name: this.$config.homeName
+      this.handleAdminLogin({ userName, password })
+        .then(res => {
+          this.getUserInfo().then(res => {
+            this.$router.push({
+              name: this.$config.homeName
+            })
           })
         })
-      })
+        .catch(err => {
+          this.$Message.error(
+            err.response.data.message || '登录出错，请联系系统管理员。'
+          )
+        })
     }
   }
 }
 </script>
 
 <style>
-
 </style>

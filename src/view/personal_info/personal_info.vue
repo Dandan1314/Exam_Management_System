@@ -10,14 +10,14 @@
         style="width: 400px"
       >
         <FormItem label="姓名" prop="name">
-          <Input type="text" v-model="userInfo.name" :readonly="!!CurrentUserNameAuthStatus"></Input>
+          <Input type="text" v-model="userInfo.name" :readonly="realNameAuthStatus"></Input>
         </FormItem>
         <FormItem label="性别" prop="sex">
           <RadioGroup v-model="userInfo.sex">
-            <Radio label="1" :disabled="!!CurrentUserNameAuthStatus">
+            <Radio label="1" :disabled="realNameAuthStatus">
               <span>男</span>
             </Radio>
-            <Radio label="2" :disabled="!!CurrentUserNameAuthStatus">
+            <Radio label="2" :disabled="realNameAuthStatus">
               <span>女</span>
             </Radio>
           </RadioGroup>
@@ -29,7 +29,7 @@
           <Input type="text" v-model="userInfo.email"></Input>
         </FormItem>
         <FormItem label="身份证号" prop="id_card">
-          <Input type="text" v-model="userInfo.id_card" :readonly="!!CurrentUserNameAuthStatus"></Input>
+          <Input type="text" v-model="userInfo.id_card" :readonly="realNameAuthStatus"></Input>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="saveUserInfo('userInfo')">保存</Button>
@@ -37,7 +37,7 @@
           <Button
             type="error"
             style="margin-left: 10px"
-            :disabled="!!CurrentUserNameAuthStatus"
+            :disabled="realNameAuthStatus"
             @click="readNameAuth"
           >实名认证</Button>
         </FormItem>
@@ -65,7 +65,12 @@
 </template>
 
 <script>
-import { getUserInfo, submitUserInfo, submitRealNameAuth, editUserPassword } from '@/api/data'
+import {
+  getUserInfo,
+  submitUserInfo,
+  submitRealNameAuth,
+  editUserPassword
+} from '@/api/data'
 import { mapGetters, mapActions } from 'vuex'
 // import * as store from '../../store/module/user'
 export default {
@@ -77,7 +82,8 @@ export default {
         sex: null,
         tel: null,
         email: null,
-        id_card: null
+        id_card: null,
+        status: 0
       },
       rule: {
         name: [{ required: true, message: '请填输入姓名', trigger: 'blur' }],
@@ -142,7 +148,8 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      realNameAuthStatus: false
     }
   },
   methods: {
@@ -183,7 +190,13 @@ export default {
       this.changePassModel = false
     },
     changePassOk () {
-      if (!(this.passwordInfo.oldPassword && this.passwordInfo.password1 && this.passwordInfo.password2)) {
+      if (
+        !(
+          this.passwordInfo.oldPassword &&
+          this.passwordInfo.password1 &&
+          this.passwordInfo.password2
+        )
+      ) {
         this.$Message.error('信息填写不完整！')
       }
       if (this.passwordInfo.password1 !== this.passwordInfo.password2) {
@@ -221,6 +234,8 @@ export default {
       .then(res => {
         vm.userInfo = Object.assign(vm.userInfo, res.data.data.userInfo)
         vm.userInfo.sex = String(vm.userInfo.sex) // 性别改成字符串的，处理iview的坑
+        vm.realNameAuthStatus = !!(Number(res.data.data.userInfo.status) || Number(vm.CurrentUserNameAuthStatus))
+        console.log(vm.realNameAuthStatus)
       })
       .catch(err => {
         console.log('err => ', err)

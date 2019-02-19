@@ -29,7 +29,7 @@ export default {
       setToken(token)
     },
     setRealNameAuth (state, realNameAuth) {
-      state.realNameAuth = localStorage.getItem('setRealNameAuth') || realNameAuth
+      state.realNameAuth = realNameAuth
     }
   },
   getters: {
@@ -78,7 +78,6 @@ export default {
           commit('setUserId', '')
           commit('setAccess', [])
           commit('setRealNameAuth', null)
-          localStorage.removeItem('setRealNameAuth')
           resolve()
         }).catch(err => {
           reject(err)
@@ -98,7 +97,6 @@ export default {
           commit('setUserId', data.id)
           commit('setAccess', [data.role])
           commit('setRealNameAuth', data.realNameAuth)
-          localStorage.setItem('setRealNameAuth', data.realNameAuth)
           resolve(data)
         } catch (error) {
           reject(error)
@@ -109,7 +107,6 @@ export default {
     setUserRealNameAuth ({ commit }) {
       return new Promise((resolve, reject) => {
         commit('setRealNameAuth', 1)
-        localStorage.setItem('setRealNameAuth', 1)
         resolve()
       })
     }

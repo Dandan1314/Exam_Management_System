@@ -49,13 +49,17 @@ export default {
       this.changeButton = this.LoginReg ? '注册新用户' : '立即登录'
     },
     handleSubmit ({ userName, password }) {
-      this.handleUserLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
-          this.$router.push({
-            name: this.$config.homeName
+      this.handleUserLogin({ userName, password })
+        .then(res => {
+          this.getUserInfo().then(res => {
+            this.$router.push({
+              name: this.$config.homeName
+            })
           })
         })
-      })
+        .catch(err => {
+          this.$Message.error(err.response.data.message || '登录出错，请联系管理员。')
+        })
     },
     handleReg ({ userName, password1, password2 }) {
       userReg({ login_name: userName, password: password1 })
