@@ -42,12 +42,7 @@
         </Form>
       </Modal>
       <!-- 修改密码模态框 -->
-      <Modal
-        v-model="changePassModel"
-        title="修改密码"
-        :loading="loading"
-        @on-ok="changePassOk"
-      >
+      <Modal v-model="changePassModel" title="修改密码" :loading="loading" @on-ok="changePassOk">
         <Form :model="passwordInfo" label-position="right" :label-width="100">
           <FormItem label="新密码">
             <Input v-model="passwordInfo.password1" type="password"></Input>
@@ -285,7 +280,7 @@ export default {
       const vm = this
       if (
         !(
-          vm.passwordInfo.password1 == vm.passwordInfo.password2 &&
+          vm.passwordInfo.password1 === vm.passwordInfo.password2 &&
           /^\w{8,}$/.test(vm.passwordInfo.password1)
         )
       ) {
@@ -305,7 +300,7 @@ export default {
         .then(res => {
           vm.editAdminModel = false
           vm.$Message.success(res.data.message)
-          if (changePassObj.aid == vm.$store.getters.CurrentUserId) {
+          if (changePassObj.aid === vm.$store.getters.CurrentUserId) {
             vm.handleLogOut().then(() => {
               vm.$router.push({
                 name: 'login'
