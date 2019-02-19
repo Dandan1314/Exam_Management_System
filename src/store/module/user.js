@@ -3,7 +3,7 @@ import {
   userLogin,
   logout
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { setToken, getToken, removeTagNavListFromLocalstorage } from '@/libs/util'
 import { Base64 } from 'js-base64'
 
 export default {
@@ -78,6 +78,7 @@ export default {
           commit('setUserId', '')
           commit('setAccess', [])
           commit('setRealNameAuth', null)
+          removeTagNavListFromLocalstorage()
           resolve()
         }).catch(err => {
           reject(err)

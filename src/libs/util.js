@@ -117,6 +117,12 @@ export const getTagNavListFromLocalstorage = () => {
   const list = localStorage.tagNaveList
   return list ? JSON.parse(list) : []
 }
+/**
+ * @description 导航列表的清除
+ */
+export const removeTagNavListFromLocalstorage = () => {
+  localStorage.removeItem('tagNaveList')
+}
 
 /**
  * @param {Array} routers 路由列表数组

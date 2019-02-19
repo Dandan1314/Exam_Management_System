@@ -235,7 +235,6 @@ export default {
         vm.userInfo = Object.assign(vm.userInfo, res.data.data.userInfo)
         vm.userInfo.sex = String(vm.userInfo.sex) // 性别改成字符串的，处理iview的坑
         vm.realNameAuthStatus = !!(Number(res.data.data.userInfo.status) || Number(vm.CurrentUserNameAuthStatus))
-        console.log(vm.realNameAuthStatus)
       })
       .catch(err => {
         console.log('err => ', err)
@@ -247,7 +246,7 @@ export default {
   // beforeRouteLeave (to, from, next) {
   //   const realNameAuth = store.default.state.realNameAuth - 0
   //   if (!realNameAuth) {
-  //     console.log('未通过实名认证')
+  //     console.log('未通过实名认证，不跳转路由！')
   //     next(false)
   //   } else {
   //     next()
