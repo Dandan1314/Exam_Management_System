@@ -16,7 +16,7 @@
         >{{changeButton}}</Button>
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit" v-show="LoginReg"></login-form>
-          <reg-form @on-success-valid="handleReg" v-show="!LoginReg"></reg-form>
+          <reg-form @on-success-valid="handleReg" v-show="!LoginReg" class="reg-form"></reg-form>
         </div>
       </Card>
     </div>
