@@ -97,17 +97,23 @@ export default {
           commit('setUserName', data.name)
           commit('setUserId', data.id)
           commit('setAccess', [data.role])
-          commit('setRealNameAuth', data.realNameAuth)
           resolve(data)
         } catch (error) {
           reject(error)
         }
       })
     },
-    // 修改用户实名认证状态
-    setUserRealNameAuth ({ commit }) {
+    getUserRealNameAuthStatus ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        commit('setRealNameAuth', 1)
+        const data = JSON.parse(Base64.decode(state.token.split('.')[1]))
+        commit('setRealNameAuth', data.realNameAuth)
+        resolve()
+      })
+    },
+    // 修改用户实名认证状态
+    setUserRealNameAuth ({ commit }, { authStatus }) {
+      return new Promise((resolve, reject) => {
+        commit('setRealNameAuth', authStatus)
         resolve()
       })
     }

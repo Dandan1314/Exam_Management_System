@@ -75,7 +75,6 @@ export default {
       'errorCount'
     ]),
     tagNavList () {
-      console.log(this.$store.state.app.tagNavList)
       return this.$store.state.app.tagNavList
     },
     tagRouter () {

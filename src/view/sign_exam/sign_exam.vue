@@ -17,7 +17,6 @@
 <script>
 import { getExamInfoList, addSignInfo } from '@/api/data'
 import * as moment from 'moment'
-import * as store from '../../store/module/user'
 export default {
   name: 'sign_exam_child',
   data () {
@@ -166,12 +165,11 @@ export default {
     vm.getExamInfoList(1)
   },
   beforeRouteEnter (to, from, next) {
-    const realNameAuth = store.default.state.realNameAuth - 0
-    if (!realNameAuth) {
-      next({ path: '/personal_info/personal_info_child' })
-    } else {
-      next()
-    }
+    next(vm => {
+      if (!vm.$store.getters.CurrentUserNameAuthStatus) {
+        vm.$router.replace('/personal_info/personal_info_child')
+      }
+    })
   }
 }
 </script>

@@ -10,14 +10,14 @@
         style="width: 400px"
       >
         <FormItem label="姓名" prop="name">
-          <Input type="text" v-model="userInfo.name" :readonly="realNameAuthStatus"></Input>
+          <Input type="text" v-model="userInfo.name" :readonly="!!CurrentUserNameAuthStatus"></Input>
         </FormItem>
         <FormItem label="性别" prop="sex">
           <RadioGroup v-model="userInfo.sex">
-            <Radio label="1" :disabled="realNameAuthStatus">
+            <Radio label="1" :disabled="!!CurrentUserNameAuthStatus">
               <span>男</span>
             </Radio>
-            <Radio label="2" :disabled="realNameAuthStatus">
+            <Radio label="2" :disabled="!!CurrentUserNameAuthStatus">
               <span>女</span>
             </Radio>
           </RadioGroup>
@@ -29,7 +29,7 @@
           <Input type="text" v-model="userInfo.email"></Input>
         </FormItem>
         <FormItem label="身份证号" prop="id_card">
-          <Input type="text" v-model="userInfo.id_card" :readonly="realNameAuthStatus"></Input>
+          <Input type="text" v-model="userInfo.id_card" :readonly="!!CurrentUserNameAuthStatus"></Input>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="saveUserInfo('userInfo')">保存</Button>
@@ -37,7 +37,7 @@
           <Button
             type="error"
             style="margin-left: 10px"
-            :disabled="realNameAuthStatus"
+            :disabled="!!CurrentUserNameAuthStatus"
             @click="readNameAuth"
           >实名认证</Button>
         </FormItem>
@@ -72,7 +72,6 @@ import {
   editUserPassword
 } from '@/api/data'
 import { mapGetters, mapActions } from 'vuex'
-// import * as store from '../../store/module/user'
 export default {
   name: 'personal_info_child',
   data () {
@@ -148,8 +147,7 @@ export default {
             trigger: 'blur'
           }
         ]
-      },
-      realNameAuthStatus: false
+      }
     }
   },
   methods: {
@@ -176,7 +174,7 @@ export default {
       submitRealNameAuth(this.userInfo)
         .then(res => {
           this.$Message.success('实名认证成功!')
-          this.setUserRealNameAuth()
+          this.setUserRealNameAuth({ authStatus: 1 })
         })
         .catch(err => {
           this.$Message.error('实名认证失败!')
@@ -234,7 +232,9 @@ export default {
       .then(res => {
         vm.userInfo = Object.assign(vm.userInfo, res.data.data.userInfo)
         vm.userInfo.sex = String(vm.userInfo.sex) // 性别改成字符串的，处理iview的坑
-        vm.realNameAuthStatus = !!(Number(res.data.data.userInfo.status) || Number(vm.CurrentUserNameAuthStatus))
+        vm.realNameAuthStatus = !!Number(res.data.data.userInfo.status)
+        vm.setUserRealNameAuth({ authStatus: Number(res.data.data.userInfo.status) })
+        if (!vm.realNameAuthStatus) vm.$Message.error('使用考试预约功能，必须进行实名认证！')
       })
       .catch(err => {
         console.log('err => ', err)
@@ -243,14 +243,5 @@ export default {
   computed: {
     ...mapGetters(['CurrentUserNameAuthStatus', 'CurrentUserId'])
   }
-  // beforeRouteLeave (to, from, next) {
-  //   const realNameAuth = store.default.state.realNameAuth - 0
-  //   if (!realNameAuth) {
-  //     console.log('未通过实名认证，不跳转路由！')
-  //     next(false)
-  //   } else {
-  //     next()
-  //   }
-  // }
 }
 </script>

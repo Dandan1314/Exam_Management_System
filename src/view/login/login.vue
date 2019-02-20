@@ -42,7 +42,8 @@ export default {
   methods: {
     ...mapActions([
       'handleUserLogin',
-      'getUserInfo'
+      'getUserInfo',
+      'getUserRealNameAuthStatus'
     ]),
     changeLoginRegStatus () {
       this.LoginReg = !this.LoginReg
@@ -51,11 +52,15 @@ export default {
     handleSubmit ({ userName, password }) {
       this.handleUserLogin({ userName, password })
         .then(res => {
-          this.getUserInfo().then(res => {
-            this.$router.push({
-              name: this.$config.homeName
+          return this.getUserInfo()
+            .then(res => {
+              return this.getUserRealNameAuthStatus()
             })
-          })
+            .then(res => {
+              this.$router.push({
+                name: this.$config.homeName
+              })
+            })
         })
         .catch(err => {
           this.$Message.error(err.response.data.message || '登录出错，请联系管理员。')
