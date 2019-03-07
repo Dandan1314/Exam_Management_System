@@ -238,11 +238,12 @@ export default {
         .then(res => {
           vm.$Message.success(res.data.message)
           vm.getUserList(1)
+          vm.deleteUserModel = false
         })
         .caech(err => {
           vm.$Message.error(err.response.data.message || '删除失败！')
+          vm.deleteUserModel = false
         })
-      vm.deleteUserModel = false
     }
   },
   created () {

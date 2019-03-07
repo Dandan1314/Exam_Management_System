@@ -6,7 +6,7 @@
   <div class="login">
     <div class="login-con">
       <Card icon="log-in" :bordered="false">
-        <p slot="title">欢迎使用考试预约系统</p>
+        <p slot="title">欢迎使用大学生考证信息平台</p>
         <Button
           type="text"
           slot="extra"

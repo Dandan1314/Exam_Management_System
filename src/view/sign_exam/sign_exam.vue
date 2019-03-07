@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card shadow>
-      <!--  考试信息列表  -->
+      <!--  考证信息列表  -->
       <Table stripe :columns="examListTitle" :data="ExamList" :style="{margin:'20px 0'}"></Table>
       <!-- 分页组件 -->
       <Page
@@ -25,7 +25,7 @@ export default {
       pagesize: 10,
       examListTitle: [
         {
-          title: '考试ID',
+          title: '考证ID',
           key: 'id',
           width: '80px'
         },
@@ -34,12 +34,12 @@ export default {
           key: 'title'
         },
         {
-          title: '考试分类',
+          title: '考证分类',
           key: 'category',
           width: '150px'
         },
         {
-          title: '考试时间',
+          title: '考证时间',
           key: 'time'
         },
         {

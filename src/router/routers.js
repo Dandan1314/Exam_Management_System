@@ -92,7 +92,7 @@ export default [
         name: 'manage_exam_category_child',
         meta: {
           icon: 'md-paper',
-          title: '考试分类管理'
+          title: '考证分类管理'
         },
         component: () => import('@/view/manage_exam_category/manage_exam_category.vue')
       }
@@ -112,7 +112,7 @@ export default [
         name: 'exam_info_manage_child',
         meta: {
           icon: 'md-paper',
-          title: '考试信息管理'
+          title: '考证信息管理'
         },
         component: () => import('@/view/exam_info_manage/exam_info_manage.vue')
       }

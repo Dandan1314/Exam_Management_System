@@ -46,7 +46,7 @@
               </Col>
               <Col span="24">
                 <FormItem label="时间">
-                  <DatePicker type="datetime" :style="{width: '100%'}" @on-change="setDateTime"></DatePicker>
+                  <DatePicker :options="options" type="datetime" :style="{width: '100%'}" @on-change="setDateTime"></DatePicker>
                 </FormItem>
               </Col>
             </Col>
@@ -223,6 +223,11 @@ export default {
         cid: 0,
         content: '',
         time: ''
+      },
+      options: {
+        disabledDate (date) {
+          return date && date.valueOf() < Date.now() - 86400000
+        }
       }
     }
   },
@@ -250,7 +255,7 @@ export default {
         .then(res => {
           vm.$Message.success('添加成功！')
           vm.examSubmitLoading = false
-          vm.getExamInfoList(1)
+          vm.getExamInfoList(1) 
           vm.closeAddInfoModal()
         })
         .catch(err => {
