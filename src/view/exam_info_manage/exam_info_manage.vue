@@ -366,11 +366,6 @@ export default {
     searchExamInfo () {
       const vm = this
       vm.searchExamInfoModel = true
-      vm.searchExamObj = {
-        cid: '',
-        title: '',
-        author: ''
-      }
     },
     searchExamList (searchExamObj) {
       const vm = this
@@ -384,7 +379,7 @@ export default {
         for (var i in data) {
           var key = encodeURIComponent(i)
           var value = encodeURIComponent(data[i])
-          if (value) {
+          if (value && (value !== 'undefined')) {
             tempArr.push(key + '=' + value)
           }
         }
@@ -397,6 +392,11 @@ export default {
     cancleSearchExam () {
       const vm = this
       vm.getExamInfoList(1)
+      vm.searchExamObj = {
+        cid: '',
+        title: '',
+        author: ''
+      }
       vm.searchStatus = false
     }
   },
