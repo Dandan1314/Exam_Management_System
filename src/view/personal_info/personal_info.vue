@@ -38,7 +38,7 @@
             type="error"
             style="margin-left: 10px"
             :disabled="!!CurrentUserNameAuthStatus"
-            @click="readNameAuth"
+            @click="readNameAuth('userInfo')"
           >实名认证</Button>
         </FormItem>
       </Form>
@@ -170,16 +170,22 @@ export default {
           this.$Message.error('保存失败!')
         })
     },
-    readNameAuth () {
-      submitRealNameAuth(this.userInfo)
-        .then(res => {
-          this.$Message.success('实名认证成功!')
-          this.setUserRealNameAuth({ authStatus: 1 })
-        })
-        .catch(err => {
-          this.$Message.error('实名认证失败!')
-          console.log('err => ', err)
-        })
+    readNameAuth (ruleName) {
+      this.$refs[ruleName].validate((valid) => {
+        if (valid) {
+          submitRealNameAuth(this.userInfo)
+            .then(res => {
+              this.$Message.success('实名认证成功!')
+              this.setUserRealNameAuth({ authStatus: 1 })
+            })
+            .catch(err => {
+              this.$Message.error('实名认证失败!')
+              console.log('err => ', err)
+            })
+        } else {
+          this.$Message.error('信息填写有误，请检查!')
+        }
+      })
     },
     changePassword () {
       this.changePassModel = true
