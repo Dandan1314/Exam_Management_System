@@ -78,9 +78,9 @@ export const addExamInfo = examInfo => {
 }
 
 // 获取考试信息列表
-export const getExamInfoList = (pageNum, limit) => {
+export const getExamInfoList = (pageNum, limit, searchStr) => {
   return axios.request({
-    url: `getExamInfoList/${limit}/${pageNum}`,
+    url: `getExamInfoList/${limit}/${pageNum}${searchStr ? `?${searchStr}` : ''}`,
     method: `get`
   })
 }

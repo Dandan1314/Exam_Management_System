@@ -2,16 +2,40 @@
   <div>
     <Card shadow>
       <Button type="primary" @click="addExamInfo">新增考试信息</Button>
+      <Button type="primary" @click="searchExamInfo" :style="{marginLeft:'20px'}" v-show="!searchStatus">搜索</Button>
+      <Button type="primary" @click="cancleSearchExam" :style="{marginLeft:'20px'}" v-show="searchStatus">取消搜索</Button>
 
       <!--  考试信息列表  -->
       <Table stripe :columns="examListTitle" :data="ExamList" :style="{margin:'20px 0'}"></Table>
       <!-- 分页组件 -->
       <Page
+        v-show="!searchStatus"
         :total="totalNum"
         :page-size="pagesize"
         :style="{margin:'20px 0'}"
         @on-change="getExamInfoList"
       />
+
+      <!-- 搜索考试信息模态框 -->
+      <Modal v-model="searchExamInfoModel" title="搜索结果将会展示最接近的20条" @on-ok="searchExamList(searchExamObj)" ok-text="搜索">
+        <Form :model="searchExamObj" label-position="right" :label-width="100">
+          <FormItem label="分类">
+                  <Select v-model="searchExamObj.cid" filterable>
+                    <Option
+                      v-for="item in examCategoryList"
+                      :value="item.id"
+                      :key="item.id"
+                    >{{ item.name }}</Option>
+                  </Select>
+                </FormItem>
+          <FormItem label="标题">
+            <Input v-model="searchExamObj.title"></Input>
+          </FormItem>
+          <FormItem label="作者">
+            <Input v-model="searchExamObj.author"></Input>
+          </FormItem>
+        </Form>
+      </Modal>
 
       <!-- 新增考试信息模态框 -->
       <Modal v-model="addExamInfoModel" title="新增考试信息" :width="1024">
@@ -46,7 +70,12 @@
               </Col>
               <Col span="24">
                 <FormItem label="时间">
-                  <DatePicker :options="options" type="datetime" :style="{width: '100%'}" @on-change="setDateTime"></DatePicker>
+                  <DatePicker
+                    :options="options"
+                    type="datetime"
+                    :style="{width: '100%'}"
+                    @on-change="setDateTime"
+                  ></DatePicker>
                 </FormItem>
               </Col>
             </Col>
@@ -69,7 +98,12 @@
 </template>
 
 <script>
-import { getExamCategoryList, getExamInfoList, addExamInfo, deleteExamInfo } from '@/api/data'
+import {
+  getExamCategoryList,
+  getExamInfoList,
+  addExamInfo,
+  deleteExamInfo
+} from '@/api/data'
 import Editor from 'wangeditor'
 import { oneOf } from '@/libs/tools'
 import * as moment from 'moment'
@@ -228,7 +262,14 @@ export default {
         disabledDate (date) {
           return date && date.valueOf() < Date.now() - 86400000
         }
-      }
+      },
+      searchExamInfoModel: false,
+      searchExamObj: {
+        cid: '',
+        title: '',
+        author: ''
+      },
+      searchStatus: false
     }
   },
   computed: {
@@ -255,7 +296,7 @@ export default {
         .then(res => {
           vm.$Message.success('添加成功！')
           vm.examSubmitLoading = false
-          vm.getExamInfoList(1) 
+          vm.getExamInfoList(1)
           vm.closeAddInfoModal()
         })
         .catch(err => {
@@ -286,9 +327,9 @@ export default {
         time: ''
       }
     },
-    getExamInfoList (pageNum) {
+    getExamInfoList (pageNum, size, searchExamInfoStr) {
       const vm = this
-      getExamInfoList(pageNum || 1, vm.pagesize).then(res => {
+      getExamInfoList(pageNum || 1, size || vm.pagesize, searchExamInfoStr).then(res => {
         vm.renderExamList(res)
       })
     },
@@ -321,6 +362,42 @@ export default {
         content: content,
         width: '800px'
       })
+    },
+    searchExamInfo () {
+      const vm = this
+      vm.searchExamInfoModel = true
+      vm.searchExamObj = {
+        cid: '',
+        title: '',
+        author: ''
+      }
+    },
+    searchExamList (searchExamObj) {
+      const vm = this
+      const searchExamStr = vm.parseParams(searchExamObj)
+      vm.getExamInfoList(1, 20, searchExamStr)
+      vm.searchStatus = true
+    },
+    parseParams (data) {
+      try {
+        var tempArr = []
+        for (var i in data) {
+          var key = encodeURIComponent(i)
+          var value = encodeURIComponent(data[i])
+          if (value) {
+            tempArr.push(key + '=' + value)
+          }
+        }
+        var urlParamsStr = tempArr.join('&')
+        return urlParamsStr
+      } catch (err) {
+        return ''
+      }
+    },
+    cancleSearchExam () {
+      const vm = this
+      vm.getExamInfoList(1)
+      vm.searchStatus = false
     }
   },
   created () {
